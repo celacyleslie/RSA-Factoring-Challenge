@@ -1,0 +1,30 @@
+import math
+import sys
+
+def factorize_number(n):
+    factors = []
+    for i in range(2, int(math.sqrt(n)) + 1):
+        while n % i == 0:
+            factors.append(i)
+            n //= i
+    if n > 1:
+        factors.append(n)
+    return factors
+
+def factorize_file(file_path):
+    with open(file_path, 'r') as file:
+        lines = file.readlines()
+
+    for line in lines:
+        number = int(line.strip())
+        factors = factorize_number(number)
+        if len(factors) >= 2:
+            print(f"{number}={'*'.join(map(str, factors[:2]))}")
+
+if __name__ == "__main__":
+    if len(sys.argv) != 2:
+        print("Usage: python3 factors.py <file>")
+        sys.exit(1)
+
+    file_path = sys.argv[1]
+    factorize_file(file_path)
